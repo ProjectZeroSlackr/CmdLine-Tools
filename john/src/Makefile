@@ -83,6 +83,7 @@ default:
 #	@echo "linux-x86-64-32-sse2     Linux, AMD x86-64, 32-bit with SSE2"
 #	@echo "linux-x86-64-32-mmx      Linux, AMD x86-64, 32-bit with MMX"
 	@echo "linux-alpha              Linux, Alpha"
+	@echo "linux-arm                Linux, Arm"
 	@echo "linux-sparc              Linux, SPARC 32-bit"
 	@echo "linux-ppc32-altivec      Linux, PowerPC w/AltiVec (best)"
 	@echo "linux-ppc32              Linux, PowerPC 32-bit"
@@ -193,6 +194,12 @@ linux-alpha-ccc:
 		CFLAGS="-c -Wf,-switch,noil_schedule" \
 		OPT_NORMAL="-fast" \
 		OPT_INLINE="-O2 -arch host"
+
+linux-arm:
+	$(LN) arm.h arch.h
+	$(MAKE) $(PROJ) \
+		CPP=arm-elf-gcc CC=arm-elf-gcc AS=arm-elf-gcc LD=arm-elf-gcc \
+		LDFLAGS="$(LDFLAGS) -elf2flt"
 
 linux-sparc:
 	$(LN) sparc32.h arch.h
